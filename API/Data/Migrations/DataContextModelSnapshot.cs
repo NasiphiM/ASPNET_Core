@@ -25,7 +25,7 @@ namespace API.Data.Migrations
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("BLOB");
 
-                    b.Property<byte[]>("PaswordSalt")
+                    b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("BLOB");
 
                     b.Property<string>("UserName")
@@ -33,7 +33,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

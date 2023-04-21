@@ -1,5 +1,6 @@
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; 
 
@@ -8,7 +9,8 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]  // GET api/users 
-
+    
+    [Authorize]
 	public class UsersController : ControllerBase
 	{
         private readonly DataContext _context; 
@@ -20,6 +22,7 @@ namespace API.Controllers
 
         //endpoints need HTTP method to make requests & to get from an API endpoint 
         // you can use HTTP GET method 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()  //action result can return http responses such as  Not Found , asynchronous so that we can make multithreaded 
         {

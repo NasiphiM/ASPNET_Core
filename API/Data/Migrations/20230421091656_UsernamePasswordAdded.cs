@@ -5,7 +5,7 @@
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UserPasswordAdded : Migration
+    public partial class UsernamePasswordAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace API.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<byte[]>(
-                name: "PaswordSalt",
+                name: "PasswordSalt",
                 table: "Users",
                 type: "BLOB",
                 nullable: true);
@@ -31,7 +31,7 @@ namespace API.Data.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "PaswordSalt",
+                name: "PasswordSalt",
                 table: "Users");
         }
     }
