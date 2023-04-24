@@ -9,3 +9,11 @@
   color: #44001a;
   font-weight:500;
 }
+#welcome{
+  color: #44001a;
+  font-weight:500;
+}
+
+.dropdown-toggle, .dropdown-item {
+  cursor: pointer;
+}
