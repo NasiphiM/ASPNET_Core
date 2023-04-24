@@ -15,4 +15,7 @@ export class HomeComponent implements OnInit {
   registerToggle(){
     this.registerNode = !this.registerNode;
   }
+  cancelReg(){
+    //Add Code here : lecture 61
+  }
 }
