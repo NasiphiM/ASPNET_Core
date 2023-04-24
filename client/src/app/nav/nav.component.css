@@ -9,6 +9,12 @@
   color: #44001a;
   font-weight:500;
 }
+
+.nav-link:hover{
+  text-decoration: underline;
+  color: #ff1a71;
+}
+
 #welcome{
   color: #44001a;
   font-weight:500;
