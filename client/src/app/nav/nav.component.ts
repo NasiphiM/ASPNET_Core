@@ -11,23 +11,31 @@ import { AccountService } from '../_SERVICES/account.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit{
-
-  model:any ={}
+  model:any ={};
+  //isLogged = true;
   constructor(public accountService : AccountService,  private router: Router, private toastr: ToastrService  ) {
   }
   ngOnInit() : void {
   }
-
+  test(){
+    console.log("this is test :");
+    console.log(this.accountService.currUser$)
+  }
   login(){
+    //this.isLogged = true;
     this.accountService.login(this.model).subscribe(
       {
-        next: _=> this.router.navigateByUrl('/members/'),
-        error: err => this.toastr.error(err.error)    //err is an object and error is a property of this object
+        next: _=> {
+          this.router.navigateByUrl('/members');
+          this.model = {};
+        }
+        //error: err => this.toastr.error(err.error)    //err is an object and error is a property of this object
       }
     )
   }
 
   logout(){
+   this.accountService.logout();
     this.router.navigateByUrl('/');
   }
 }

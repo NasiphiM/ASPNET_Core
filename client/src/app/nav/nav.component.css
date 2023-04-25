@@ -1,18 +1,18 @@
-.navbar{
-  background-color: #ffc2d1;
+.form-control{
+  background-color: #a74281;
 }
 .navbar-brand{
   font-weight: bolder;
-  color: #a4133c;
+  color: #ffe6ff;
 }
 .nav-link {
-  color: #44001a;
+  color: white;
   font-weight:500;
 }
 
 .nav-link:hover{
   text-decoration: underline;
-  color: #ff1a71;
+  color:dodgerblue;
 }
 
 #welcome{

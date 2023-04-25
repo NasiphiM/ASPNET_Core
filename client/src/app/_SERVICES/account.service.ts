@@ -15,9 +15,10 @@ export class AccountService {
                                               // (null) - means we're initially seeting it to null
   currUser$ = this.currUserSource.asObservable();
   //injecting http client into constructor
-  constructor (private http: HttpClient) { }
+  constructor (private http: HttpClient) {}
 
   login(model:any){
+
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map((response: User)=> {
         const user = response;
