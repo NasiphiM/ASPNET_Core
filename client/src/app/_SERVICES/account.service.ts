@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { User } from '../_models/user';
 //Doing it in here allows us to centralise our http requests
 
 export class AccountService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   private currUserSource = new BehaviorSubject<User | null >(null); //current source can either be a User type or null
                                               // (null) - means we're initially seeting it to null
   currUser$ = this.currUserSource.asObservable();

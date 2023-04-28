@@ -1,5 +1,8 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; 
@@ -12,29 +15,34 @@ namespace API.Controllers
     
     [Authorize]
 	public class UsersController : ControllerBase
-	{
-        private readonly DataContext _context; 
-        
-        public UsersController(DataContext context)
+    {
+
+        private readonly IUserRepository _userRepository; 
+        private readonly IMapper _mapper; 
+        public UsersController(IUserRepository userRepository, IMapper mapper )
         {
-            _context = context; 
+            _mapper = mapper; 
+            _userRepository = userRepository; 
         }
 
         //endpoints need HTTP method to make requests & to get from an API endpoint 
         // you can use HTTP GET method 
-        [AllowAnonymous]
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()  //action result can return http responses such as  Not Found , asynchronous so that we can make multithreaded 
+        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers()  //action result can return http responses such as  Not Found , asynchronous so that we can make multithreaded 
         {
-            var users = await _context.Users.ToListAsync(); // gets a list of users from the database 
-            return users; 
+            var users = await _userRepository.GetMembersAsync();
+            
+            return Ok(users);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDTO>> GetUser(string username)
         {
-                                                            //finding user with that specific id 
-            return await _context.Users.FindAsync(id);
+            //finding user with that specific id 
+            return await _userRepository.GetMemberAsync(username);
+
+        
         }
 
 
