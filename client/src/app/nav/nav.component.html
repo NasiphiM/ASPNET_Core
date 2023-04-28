@@ -24,9 +24,9 @@
       </ul>
       <!--Everywhere we have loggedIn , we're gonna use async pipe Thus : currUser$ (observable) | async-->
       <div class="dropdown" *ngIf="(accountService.currUser$ | async) as user" dropdown>
-        <a id="welcome" class="dropdown-toggle toggle text-decoration-none" dropdownToggle> Welcome User </a>
+        <a id="welcome" class="dropdown-toggle toggle text-decoration-none" dropdownToggle> Welcome user </a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
-          <a class="dropdown-item">Edit Profile</a>
+          <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
           <a class="dropdown-item" (click)="logout()"> Logout</a>
         </div>
       </div>

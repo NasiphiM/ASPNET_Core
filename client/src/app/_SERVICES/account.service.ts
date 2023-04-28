@@ -16,7 +16,13 @@ export class AccountService {
                                               // (null) - means we're initially seeting it to null
   currUser$ = this.currUserSource.asObservable();
   //injecting http client into constructor
-  constructor (private http: HttpClient) {}
+  constructor (private http: HttpClient) {
+    let x = localStorage.getItem('user');
+    if (x){
+      let u = JSON.parse(x) as User;
+      this.currUserSource.next(u);
+    }
+  }
 
   login(model:any){
 
