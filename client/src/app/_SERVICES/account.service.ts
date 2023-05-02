@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,8 +31,7 @@ export class AccountService {
       map((response: User)=> {
         const user = response;
         if (user){
-          localStorage.setItem('user', JSON.stringify(user)) //user infoormation  in json format
-          this.currUserSource.next(user);                   //if we successfully login we can then update  currUserSource
+          this.setCurrentUser(user);                //if we successfully login we can then update  currUserSource
         }
       })
     )
@@ -41,10 +41,9 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map(user => {
         if (user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currUserSource.next(user);
+          this.setCurrentUser(user);
         }
-        return user;
+
       })
     )
   }

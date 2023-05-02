@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountService } from '../_SERVICES/account.service';
 
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -12,15 +13,13 @@ import { AccountService } from '../_SERVICES/account.service';
 })
 export class NavComponent implements OnInit{
   model:any ={};
+
   //isLogged = true;
-  constructor(public accountService : AccountService,  private router: Router, private toastr: ToastrService  ) {
+  constructor(public accountService : AccountService,  private router: Router, private toastr: ToastrService ) {
   }
   ngOnInit() : void {
   }
-  test(){
-    console.log("this is test :");
-    console.log(this.accountService.currUser$)
-  }
+
   login(){
     //this.isLogged = true;
     this.accountService.login(this.model).subscribe(
@@ -35,7 +34,7 @@ export class NavComponent implements OnInit{
   }
 
   logout(){
-   this.accountService.logout();
+    this.accountService.logout();
     this.router.navigateByUrl('/');
   }
 }
