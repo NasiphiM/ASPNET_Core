@@ -1,22 +1,27 @@
-import { Component,EventEmitter,OnInit, Output } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { AccountService } from '../_SERVICES/account.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AccountService} from '../_SERVICES/account.service';
+
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent  implements OnInit{
+export class RegisterComponent implements OnInit{
   @Output() cancelReg = new EventEmitter();
-  model: any ={}
   registerForm : FormGroup = new FormGroup({});
+  maxDate: Date = new Date();
+  ValidationErrors : string[] | undefined;
 
-  constructor(private accService: AccountService, private toastr: ToastrService, private fb : FormBuilder){}
+  constructor(private accService: AccountService, private toastr: ToastrService, private fb : FormBuilder,
+              private router: Router){}
 
   ngOnInit():void {
     this.initializeForm();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
   initializeForm(){
@@ -44,19 +49,36 @@ export class RegisterComponent  implements OnInit{
     }
   }
   register(){
-    console.log(this.registerForm?.value)
-    /*this.accService.register(this.model).subscribe({
+    const dob = this.getDateOnly(this.registerForm.controls['DateOfBirth'].value);
+    const values = {...this.registerForm.value, DateOfBirth: dob }
+
+    this.accService.register(this.registerForm.value).subscribe({ //this.model -> for normal forms
+                                                                  // & this.registerForm.value -> Reactive Form
       next: () => {
-        this.cancel();
+        this.router.navigateByUrl('/members'); // Navigates back to members page
       },
       error: err =>{
-        this.toastr.error(err.error),
-        console.log(err);
+        this.ValidationErrors = err;
       }
-    })*/
+    })
   }
 
   cancel(){
     this.cancelReg.emit(false);
+  }
+
+  private getDateOnly(dob: string | undefined){
+    if (!dob)
+      return;
+    let theDob = new Date(dob);   //date displays the whole date including time
+    //to get the minutes from that date to this
+    let dateMin = new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset()));
+
+    //convert date into string format YYYY-MM-DD eg 2023-04-26T11:06:01Z
+    let isodate = dateMin.toISOString();
+
+    //now I want the first 10 characters of the string , which will represent the date
+
+    return isodate.slice(0, 10);
   }
 }

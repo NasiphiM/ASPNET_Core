@@ -10,21 +10,29 @@
       <input type="radio" class="form-check-input  ms-3" value="female" formControlName="gender">Female
     </label>
   </div>
+
+  <!--control labels are linked to feedback in initialise form function -->
   <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Username'"></app-text-input>
   <app-text-input [formControl]="$any(registerForm.controls['knownAs'])" [label]="'Known As'"></app-text-input>
-  <app-datepicker [formControl]="$any(registerForm.controls['dateOfBirth'])" [label]="'Date of Birth'"></app-datepicker>
-  <app-text-input [formControl]="$any(registerForm.controls['city'])" [label]="'City'"></app-text-input>
-  <app-text-input [formControl]="$any(registerForm.controls['country'])" [label]="'Country'"></app-text-input>
+  <app-datepicker [formControl]="$any(registerForm.controls['DateOfBirth'])" [label]="'Date of Birth'" [maxDate]="maxDate"></app-datepicker>
+  <app-text-input [formControl]="$any(registerForm.controls['City'])" [label]="'City'"></app-text-input>
+  <app-text-input [formControl]="$any(registerForm.controls['Country'])" [label]="'Country'"></app-text-input>
   <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Password'"
                   [type]="'password'"></app-text-input>
-  <app-text-input [formControl]="$any(registerForm.controls['confirmedPassword'])" [label]="'Confirm Password'"
+  <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [label]="'Confirm Password'"
                   [type]="'password'"></app-text-input>
+
+  <div class="row" *ngIf="ValidationErrors">
+    <ul class="text-danger">
+      <li *ngFor="let err of ValidationErrors">
+        {{err}}
+      </li>
+    </ul>
+  </div>
+
   <div class="text-center">
-    <button class="btn me-2" type="submit">Register </button>
+    <button [disabled]="!registerForm.valid" class="btn me-2" type="submit">Register </button>
     <button id="cancel" class="btn me-2" type="button" (click)="cancel() ">Cancel </button>
   </div>
 </form>
-
-<p>Form value: {{registerForm.value | json}}</p>
-<p>Form status: {{registerForm.status | json}}</p>
 
