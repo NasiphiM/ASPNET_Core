@@ -27,8 +27,10 @@ export class NavComponent implements OnInit{
         next: _=> {
           this.router.navigateByUrl('/members');
           this.model = {};
-        }
-        //error: err => this.toastr.error(err.error)    //err is an object and error is a property of this object
+        },
+        error: err => {
+          this.toastr.error(err.error)
+        }   //err is an object and error is a property of this object
       }
     )
   }

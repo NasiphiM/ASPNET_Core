@@ -70,13 +70,15 @@ namespace API.Controllers
                     return Unauthorized("Invalid Password");
             }
 
+            
             return new UserDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user), 
-                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain).Url, 
+                Token = _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
                 KnownAs = user.KnownAs
             };
+          
         }
 
         private async Task<bool> UserExists(string username)
