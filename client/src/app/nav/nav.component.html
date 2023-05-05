@@ -23,7 +23,7 @@
       <!--Everywhere we have loggedIn , we're gonna use async pipe Thus : currUser$ (observable) | async-->
       <div class="dropdown" *ngIf="(accountService.currUser$ | async) as user" dropdown>
         <img src="{{user.photoUrl || './assets/user.png'}}" alt=" user photo">
-        <a id="welcome" class="dropdown-toggle toggle text-decoration-none ms-2" dropdownToggle> Welcome user </a>
+        <a id="welcome" class="dropdown-toggle toggle text-decoration-none ms-2" dropdownToggle> Welcome {{user.knownAs}} </a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
           <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
           <a class="dropdown-item" (click)="logout()"> Logout</a>
