@@ -37,6 +37,14 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDTO>>> GetUsers([FromQuery]UserParams userParams)  //action result can return http responses such as  Not Found , asynchronous so that we can make multithreaded 
         {
+            var currUser = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername = currUser.UserName;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = currUser.Gender == "male" ? "female" : "male";
+            }
+            
             var users = await _userRepository.GetMembersAsync(userParams);
             
             Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage,users.PagesSize, users.TotalCount, users.TotalPages));
