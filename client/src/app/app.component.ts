@@ -20,14 +20,6 @@ export class AppComponent implements OnInit{
     this.setCurrentUser();
   }
 
-  /*getUsers(){
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      next: response => this.users = response,
-      error:() => {},
-      complete: ()=> console.log("The task is completed")
-    })
-  }*/
-
   setCurrentUser(){
     const userString = localStorage.getItem('user');
 
