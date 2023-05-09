@@ -30,9 +30,11 @@
       </div>
     </div>
     </div>
+
     <div class="col-8">
       <tabset class="member-tabset" #memberTabs>
         <tab heading="About {{member.knownAs}}">
+          <br>
           <h4>Description</h4>
           <p>{{member.introduction}}</p>
           <h4>Looking For</h4>
@@ -46,7 +48,7 @@
          <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
         </tab>
         <tab heading="Messages">
-          <p>Meessages come here</p>
+          <app-member-messages [username]="member.userName"></app-member-messages>
         </tab>
       </tabset>
     </div>

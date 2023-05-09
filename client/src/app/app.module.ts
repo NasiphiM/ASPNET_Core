@@ -26,6 +26,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DatepickerComponent } from './_forms/datepicker/datepicker.component';
 import { RegisterComponent } from './register/register.component';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 
 
@@ -48,6 +49,7 @@ import { RegisterComponent } from './register/register.component';
     PhotoEditorComponent,
     TextInputComponent,
     DatepickerComponent,
+    MemberMessagesComponent,
 
   ],
   imports: [
