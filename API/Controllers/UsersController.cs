@@ -33,7 +33,8 @@ namespace API.Controllers
 
         //endpoints need HTTP method to make requests & to get from an API endpoint 
         // you can use HTTP GET method 
-
+        
+       
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDTO>>> GetUsers([FromQuery]UserParams userParams)  //action result can return http responses such as  Not Found , asynchronous so that we can make multithreaded 
         {
@@ -51,7 +52,7 @@ namespace API.Controllers
             
             return Ok(users);
         }
-
+        
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDTO>> GetUser(string username)
         {

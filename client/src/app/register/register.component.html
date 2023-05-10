@@ -22,9 +22,9 @@
   <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [label]="'Confirm Password'"
                   [type]="'password'"></app-text-input>
 
-  <div class="row" *ngIf="ValidationErrors">
+  <div class="row" *ngIf="validationErrors">
     <ul class="text-danger">
-      <li *ngFor="let err of ValidationErrors">
+      <li *ngFor="let err of validationErrors">
         {{err}}
       </li>
     </ul>

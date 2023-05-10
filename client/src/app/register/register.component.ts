@@ -1,9 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {AccountService} from '../_SERVICES/account.service';
-
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AccountService } from '../_SERVICES/account.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +13,7 @@ export class RegisterComponent implements OnInit{
   @Output() cancelReg = new EventEmitter();
   registerForm : FormGroup = new FormGroup({});
   maxDate: Date = new Date();
-  ValidationErrors : string[] | undefined;
+  validationErrors : string[] | undefined;
 
   constructor(private accService: AccountService, private toastr: ToastrService, private fb : FormBuilder,
               private router: Router){}
@@ -52,13 +51,13 @@ export class RegisterComponent implements OnInit{
     const dob = this.getDateOnly(this.registerForm.controls['DateOfBirth'].value);
     const values = {...this.registerForm.value, DateOfBirth: dob }
 
-    this.accService.register(this.registerForm.value).subscribe({ //this.model -> for normal forms
+    this.accService.register(values).subscribe({ //this.model -> for normal forms
                                                                   // & this.registerForm.value -> Reactive Form
       next: () => {
         this.router.navigateByUrl('/members'); // Navigates back to members page
       },
       error: err =>{
-        this.ValidationErrors = err;
+        this.validationErrors = err;
       }
     })
   }

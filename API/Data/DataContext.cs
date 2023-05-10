@@ -1,15 +1,24 @@
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore; 
 
 namespace API.Data
-{
-	public class DataContext: DbContext
+{	
+	//so what we doing here is telling the IdentityDbContext class that our ID is int instead of string 
+	public class DataContext: IdentityDbContext<AppUser, AppRole, int, //int for id of the first two entities AppUser and AppRole
+	IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, //This is because this is a joint table , so specify everything 
+	IdentityRoleClaim<int>, IdentityUserToken<int>>
 	{
 		public DataContext(DbContextOptions options) : base(options)
 		{
 		}
 
-		public DbSet<AppUser> Users { get; set; }
+		/*IdentityDbContext already has a DB set for users
+		 * ALSO WORTH NOTING:
+		 *			We need to tell IdentityDbContext that we plan to use integers for ID instead of strings
+		 * public DbSet<AppUser> Users { get; set; }
+		 */
 		
 		public DbSet<UserLike> Likes { get; set; }
 		public DbSet<Message> Messages { get; set; }
@@ -17,6 +26,18 @@ namespace API.Data
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
+
+			builder.Entity<AppUser>()
+				.HasMany(ur => ur.UserRoles)
+				.WithOne(u => u.User)
+				.HasForeignKey(ur => ur.UserId)
+				.IsRequired();
+			
+			builder.Entity<AppRole>()
+				.HasMany(ur => ur.UserRoles)
+				.WithOne(u => u.Role)
+				.HasForeignKey(ur => ur.RoleId)
+				.IsRequired();
 
 			builder.Entity<UserLike>()
 				.HasKey(k => new { k.SourceUserId, k.TargetUserId });
