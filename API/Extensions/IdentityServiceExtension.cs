@@ -27,6 +27,16 @@ namespace API.Extensions
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
+                    
+                    //How we gonna authenticate inside SignalR
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                        }
+                    }
                 });
 
             services.AddAuthorization(opt =>

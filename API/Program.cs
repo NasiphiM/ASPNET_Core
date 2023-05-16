@@ -3,6 +3,7 @@ using API.Data;
 using API.Entities;
 using API.Middleware;
 using API.Extensions;
+using API.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,7 @@ app.UseAuthentication();   //check if this is valid user
 app.UseAuthorization();       //check if the valid user is allowed
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
 //ordering here is v important 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
